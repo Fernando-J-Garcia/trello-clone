@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Navbar from "./Components/Navbar.js";
+import Card from "./Components/List.js";
+import { useState } from "react";
+import WorkspaceNavigationPanel from "./Components/WorkspaceNavigationPanel";
 
 function App() {
+  const [boards, setBoards] = useState([]);
+  const [currentBoard, setCurrentBoard] = useState({});
+
+  //if the boards list is empty then route the user to a create
+  //board page...
+  //otherwise load the previous board...
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="main-container">
+        <WorkspaceNavigationPanel boards={boards} />
+        <div className="work-space-container">
+          <Navbar workSpaceName={"projectName"} />
+          <div className="list-container">
+            <Card />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,38 +1,127 @@
-.App {
-  text-align: center;
+:root {
+  --default-bg-color: #d4478df3;
+  --lightest-grey: rgb(240, 239, 239);
+  --grey: rgb(104, 104, 104);
+  --light-blue: #1ac4e2;
+  --blue: #1ab7d3;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  background-color: var(--default-bg-color);
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.main-container {
+  display: flex;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.work-space-container {
+  width: 100%;
+  height: 100%;
+}
+.work-space-panel {
+  width: 300px;
+  height: 100vh;
+  display: flex;
+  background-color: var(--lightest-grey);
+  padding: 0.5em;
+}
+.work-space-panel p {
+  margin: 0;
+  font-size: 1.2em;
+}
+.work-space-panel svg {
+  margin-left: auto;
+  padding: 0.25em;
+  cursor: pointer;
+}
+.flex.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+.navbar {
+  display: flex;
+  width: calc(100% - 0.5em);
+  font-size: 2em;
+  background-color: rgba(0, 0, 0, 0.137);
+  padding: 0.25em;
+}
+.navbar-item {
+  margin: 0;
+  padding: 0.25em 0.5em;
+}
+.navbar > .save-button {
+  background-color: var(--light-blue);
+  color: white;
+  padding: 0 2em;
+  border: 0;
+  cursor: pointer;
+  margin-left: auto;
+}
+.navbar > .save-button:hover {
+  background-color: var(--blue);
+}
+.list-container {
+  margin: 0.5em;
+}
+.List {
   display: flex;
   flex-direction: column;
+  width: 300px;
+  padding: 0.5em;
+  background-color: var(--lightest-grey);
+}
+.List > .card-title {
+  margin: 0;
+  padding-bottom: 1em;
+}
+.List .card-container {
+  background-color: white;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+}
+.List .card-container > p {
+  margin: 0;
+}
+.List .add-card-button {
+  margin: 0;
+  padding: 0.5em;
+  color: var(--grey);
+  cursor: pointer;
+}
+.add-card-container {
+  padding-top: 0.5em;
+}
+.add-card-container > textarea {
+  display: block;
+  width: calc(100% - 0.5em * 2);
+  height: 4em;
+  padding: 0.5em;
+  border: 0;
+}
+.add-card-container > .add-card-tools {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding-top: 0.5em;
 }
-
-.App-link {
-  color: #61dafb;
+.add-card-tools > button {
+  padding: 0.5em;
+  cursor: pointer;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.add-card-tools-close {
+  margin-left: 0.5em;
+  cursor: pointer;
+}
+.add-card-tools-options {
+  margin-left: auto;
+  cursor: pointer;
+  padding: 0.5em;
+}
+.add-card-tools-options:hover {
+  background-color: rgba(0, 0, 0, 0.055);
+}
+.create-new-board {
+  position: fixed;
+  left: calc(300px - 1em);
+  background-color: white;
+  padding: 0.5em;
 }
