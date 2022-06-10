@@ -1,12 +1,13 @@
 import React from "react";
-import Axios from "axios";
+
+const Axios = require("axios");
 
 export default function Navbar(props) {
   const saveBoard = () => {
     Axios.post("http://localhost:3001/save", {
-      board: props.board,
-      id: props.id,
-      updated_by: props.updated_by,
+      board: props.currentBoard.board,
+      id: props.currentBoard.id,
+      updated_by: "",
     });
   };
   return (
