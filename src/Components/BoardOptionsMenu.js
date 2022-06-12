@@ -65,7 +65,10 @@ export default function BoardOptionsMenu(props) {
   return (
     <div className="options-menu" ref={containerRef}>
       <div className="options-menu-title-container">
-        <p id="options-menu-board-title">(Change me to the board name)</p>
+        {/*Board Name */}
+        <p id="options-menu-board-title">
+          {JSON.parse(props.board.board).name}
+        </p>
         <AiOutlineClose onClick={handleClose} />
       </div>
       <div className="flex row">

@@ -60,13 +60,15 @@ export default function WorkspaceNavigationPanel(props) {
         <div
           key={"board-titles-" + idx}
           id={"board-titles-" + idx}
-          className="flex row"
+          className="flex row workspace-navigation-panel-board-name"
         >
-          <p>{JSON.parse(board.board).name}</p>
+          <p onClick={() => props.updateCurrentBoard(board)}>
+            {JSON.parse(board.board).name}
+          </p>
           <BsThreeDots onClick={(event) => handleOptionsClick(event, board)} />
         </div>
       ))}
-      {/*Create new board*/}
+      {/*Create new board UI*/}
       <p>{props.projectName}</p>
       {showCreateNewBoardUI ? (
         <CreateNewBoard

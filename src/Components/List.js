@@ -4,12 +4,23 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import Cards from "./Cards";
 
-export default function List() {
+export default function List(props) {
   const [cardsList, setCardsList] = useState([]);
   const [textToBeAdded, setTextToBeAdded] = useState("");
   const [showAddCardMenu, setShowAddCardMenu] = useState(false);
-
   const cardInputRef = useRef(null);
+
+  useEffect(() => {
+    console.log("list use Effect");
+    console.log(props.list);
+    if (props.list.cards !== undefined || null) {
+      setCardsList(props.list.cards);
+    } else {
+      setCardsList([]);
+    }
+  }, []);
+
+  //When Showing card Menu...
   useEffect(() => {
     if (cardInputRef.current === null) return;
 
@@ -17,23 +28,32 @@ export default function List() {
     cardInput.focus();
   }, [showAddCardMenu]);
 
+  useEffect(() => {
+    if (cardsList === null) return;
+    props.updateList(cardsList, props.listIdx);
+  }, [cardsList]);
+
   const displayAddCardMenu = () => setShowAddCardMenu(true);
 
   const handleAddCardInput = (event) => {
     setTextToBeAdded(event.target.value);
-    console.log(event.target.value);
   };
 
-  const addCard = () => {
+  const handleAddCardButtonClick = () => {
     //Hide Add Card Menu
     setShowAddCardMenu(false);
     //Add the card to card list
-    setCardsList((prevCardsList) => [...prevCardsList, textToBeAdded]);
+    console.log(cardsList);
+    addCard(textToBeAdded);
+  };
+  //card should be of type string
+  const addCard = (card) => {
+    setCardsList((prevCardsList) => [...prevCardsList, card]);
   };
 
   return (
     <div className="List">
-      <p className="list-title">Board Title</p>
+      <p className="list-title">{props.title}</p>
       <Cards cardsList={cardsList} />
       {showAddCardMenu ? (
         <div className="add-card-container">
@@ -44,7 +64,7 @@ export default function List() {
             onChange={handleAddCardInput}
           />
           <div className="add-card-tools">
-            <button onClick={addCard}>Add Card</button>
+            <button onClick={handleAddCardButtonClick}>Add Card</button>
             <AiOutlineClose
               className="add-card-tools-close"
               onClick={() => setShowAddCardMenu(false)}
