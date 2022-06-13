@@ -20,16 +20,15 @@ export default function CreateNewListMenu(props) {
   const handleCreateNewList = () => {
     const board = props.currentBoard;
     console.log(board);
-    const boardData = JSON.parse(board.board);
+    const boardData = board.data;
     boardData.lists.push({ name: inputText, cards: [] });
     console.log(boardData);
-    board.board = JSON.stringify(boardData);
     props.updateCurrentBoard(board);
     props.forceUpdate();
     setShowCreateNewListMenu(false);
   };
   return (
-    <div>
+    <div className="create-new-list-wrapper">
       <div className="create-new-list-button-container">
         {showCreateNewListMenu === false ? (
           <div

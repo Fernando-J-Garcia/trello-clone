@@ -1,4 +1,6 @@
 import "./App.css";
+import serverInfo from "./literals/serverInfo";
+import defaultBoard from "./literals/defaultBoard";
 import Navbar from "./Components/Navbar.js";
 import CreateNewListMenu from "./Components/CreateNewListMenu";
 import { useState, useEffect } from "react";
@@ -15,7 +17,7 @@ function App() {
   }, []);
 
   const fetchBoards = () => {
-    Axios.get("http://localhost:3001/boards").then((res) => {
+    Axios.get(`${serverInfo.url}/boards`).then((res) => {
       setBoards(res.data);
       getLastUsedBoard(res.data);
       console.log("Fetched Boards");
@@ -26,8 +28,17 @@ function App() {
   const getLastUsedBoard = (boards) => {
     //TODO NOT YET IMPLEMENTED: for now we are just settting the last used board to the first board in the list.
     //in the future we want to have a database for each of the users and store the their last used board there.
-    setCurrentBoard(boards[0]);
-    console.log(boards[0]);
+    if (boards.length === 0) {
+      const newBoard = {
+        data: defaultBoard,
+        created_by: "AUTO_GENERATED",
+      };
+      setCurrentBoard(newBoard);
+    } else {
+      const board = boards[0];
+      board.data = JSON.parse(board.data);
+      setCurrentBoard(board);
+    }
   };
 
   const updateBoards = () => {
@@ -41,10 +52,10 @@ function App() {
   };
   const saveBoard = () => {
     const id = currentBoard.id;
-    const boardData = currentBoard.board;
-    Axios.post("http://localhost:3001/save", {
+    const boardData = JSON.stringify(currentBoard.data);
+    Axios.post(`${serverInfo.url}/save`, {
       id: id,
-      board: boardData,
+      data: boardData,
     }).then((res) => {
       console.log(res.resultText);
       console.log("saved board");

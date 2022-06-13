@@ -1,31 +1,122 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export default function Card(props) {
-  const [isCardBeingDragged, setIsCardBeingDragged] = useState(false);
-  const [prevCardStyle, setPrevCardStyle] = useState(null);
+  const {
+    card,
+    updateCardBeingDragged,
+    //isCardBeingDragged,
+    updateIsCardBeingDragged,
+  } = props;
+
+  const prevCardStyleRef = useRef(null);
   const cardRef = useRef(null);
-  const cardCloneRef = useRef(null);
+  const [isCardBeingDragged, setIsCardBeingDragged] = useState(false);
 
   //Used to align button being dragged
   const offsetLeft = useRef(0);
   const offsetTop = useRef(0);
 
+  useEffect(() => {
+    console.log("i have updated");
+  }, [isCardBeingDragged]);
+  useEffect(() => {
+    console.log(card);
+    const cardStyle = getComputedStyle(cardRef.current);
+    prevCardStyleRef.current = {
+      width: cardStyle.width,
+      height: cardStyle.height,
+      padding: cardStyle.padding,
+      margin: cardStyle.margin,
+    };
+  }, []);
+
+  const handleMouseDown = (event) => {
+    if (isCardBeingDragged) return;
+    offsetLeft.current =
+      cardRef.current.getBoundingClientRect().left - event.pageX;
+    offsetTop.current =
+      cardRef.current.getBoundingClientRect().top - event.pageY;
+    updateIsCardBeingDragged(true);
+    setIsCardBeingDragged(true);
+  };
+
+  //The card component
+  if (isCardBeingDragged)
+    return (
+      <CardClone
+        cardData={card}
+        updateCardBeingDragged={updateCardBeingDragged}
+        isCardBeingDragged={isCardBeingDragged}
+        updateIsCardBeingDragged={updateIsCardBeingDragged}
+        setIsCardBeingDragged={(callback) => setIsCardBeingDragged(callback)}
+        cardRef={cardRef}
+        prevCardStyleRef={prevCardStyleRef}
+        offsetLeft={offsetLeft}
+        offsetTop={offsetTop}
+      />
+    );
+  return (
+    <div className="card-container" ref={cardRef} onMouseDown={handleMouseDown}>
+      <p>{card.text || ""}</p>
+    </div>
+  );
+}
+
+//Use a clone card to render the dragging of a card
+const CardClone = (props) => {
+  const {
+    cardData,
+    updateCardBeingDragged,
+    isCardBeingDragged,
+    updateIsCardBeingDragged,
+    setIsCardBeingDragged,
+    cardRef,
+    prevCardStyleRef,
+    offsetLeft,
+    offsetTop,
+  } = props;
+
+  const cardCloneRef = useRef(null);
+  const isCardBeingDraggedRef = useRef(null);
+
+  //Set the position of the card on every rerender
+  useEffect(() => {
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+    if (cardCloneRef.current === null) return;
+    if (cardRef.current === null) return;
+    const cardBounds = cardRef.current.getBoundingClientRect();
+    const cardClone = cardCloneRef.current;
+
+    cardClone.style.left = cardBounds.left + "px";
+    cardClone.style.top = cardBounds.top + "px";
+    return () => {
+      console.log("removed");
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
   //isBeingDragged
   useEffect(() => {
-    if (cardRef.current === null) return;
-    const card = cardRef.current;
+    if (isCardBeingDraggedRef.current === isCardBeingDragged) {
+      return;
+    } else {
+      isCardBeingDraggedRef.current = isCardBeingDragged;
+    }
 
     //The card has been let go...
     if (isCardBeingDragged === false) {
-      card.style = prevCardStyle;
+      if (cardRef.current === null) return;
+      const card = cardRef.current;
+
+      card.style = prevCardStyleRef.current;
       return;
 
       //The card is being dragged...
     } else {
-      //Store the style properties of the card
-      const prevCardStyle = getComputedStyle(card);
-      setPrevCardStyle(prevCardStyle);
-      card.style.backgroundColor = "grey";
+      console.log(" at card");
+      updateCardBeingDragged(cardData, prevCardStyleRef.current);
     }
   }, [isCardBeingDragged]);
 
@@ -34,9 +125,6 @@ export default function Card(props) {
     if (cardCloneRef.current === null) return;
     const cardClone = cardCloneRef.current;
     const cardCloneStyle = getComputedStyle(cardClone);
-    console.log(
-      `mouse is moving: ${event.pageX}, ${event.pageY} left : ${cardCloneStyle.left}`
-    );
     cardClone.style.left = event.pageX + offsetLeft.current + "px";
     cardClone.style.top = event.pageY + offsetTop.current + "px";
 
@@ -45,55 +133,15 @@ export default function Card(props) {
     if (parseInt(cardCloneStyle.top) < 0) cardClone.style.top = 0 + "px";
   };
   const handleMouseUp = (event) => {
-    console.log("mouse up");
+    if (isCardBeingDragged === false) return;
+    console.log("mouseup");
     setIsCardBeingDragged(false);
-  };
-  const handleMouseDown = (event) => {
-    if (isCardBeingDragged) return;
-    offsetLeft.current =
-      cardRef.current.getBoundingClientRect().left - event.pageX;
-    offsetTop.current =
-      cardRef.current.getBoundingClientRect().top - event.pageY;
-    console.log("offset: " + offsetLeft + " " + offsetTop);
-    console.log("mouse pressed");
-    setIsCardBeingDragged(true);
+    updateIsCardBeingDragged(false);
   };
   //--END Mouse Events---------------------------------------------------
-
-  //Card Clone onRender UseEffect
-  const CardClone = () => {
-    useEffect(() => {
-      if (cardCloneRef.current === null) return;
-      const cardBounds = cardRef.current.getBoundingClientRect();
-      const cardClone = cardCloneRef.current;
-      cardClone.style.left = cardBounds.left + "px";
-      cardClone.style.top = cardBounds.top + "px";
-      console.log(cardBounds.left + " " + cardBounds.top);
-      console.log(
-        getComputedStyle(cardClone).left + getComputedStyle(cardClone).top
-      );
-    }, []);
-
-    //Card Clone Component
-    return (
-      <div
-        div
-        className="card-mouse-events"
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-      >
-        <div className="card-container clone" ref={cardCloneRef}>
-          <p>{props.card}</p>
-        </div>
-      </div>
-    );
-  };
-
-  //The card component
   return (
-    <div className="card-container" ref={cardRef} onMouseDown={handleMouseDown}>
-      <p>{props.card}</p>
-      {isCardBeingDragged && <CardClone />}
+    <div className="card-container clone-draggable" ref={cardCloneRef}>
+      <p>{cardData.text || ""}</p>
     </div>
   );
-}
+};

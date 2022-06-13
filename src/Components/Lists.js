@@ -3,7 +3,8 @@ import List from "./List";
 import CreateNewListMenu from "./CreateNewListMenu";
 
 export default function Lists(props) {
-  const [cardBeingDragged, setCardBeingDragged] = useState(); //should return jsx element
+  const [isCardBeingDragged, setIsCardBeingDragged] = useState(false);
+  const [cardBeingDragged, setCardBeingDragged] = useState(); //should return string
   useEffect(() => {
     if (typeof cardBeingDragged === null || undefined) return;
   }, [cardBeingDragged]);
@@ -17,21 +18,51 @@ export default function Lists(props) {
   };
   const updateList = (cardsList, idx) => {
     const board = props.currentBoard;
-    const boardData = JSON.parse(board.board);
+    const boardData = board.data;
     boardData.lists[idx] = {
       name: boardData.lists[idx].name,
+      board_name: boardData.lists[idx].board_name,
       cards: cardsList,
     };
-    board.board = JSON.stringify(boardData);
-    console.log("updated list");
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+    console.log(boardData.lists[idx]);
+    console.log(cardsList);
+    board.data = boardData;
     props.updateCurrentBoard(board);
   };
-  const updateCardBeingDragged = (card) => {
-    setCardBeingDragged(card);
+  const removeCardFromListParent = (card) => {
+    const board = props.currentBoard;
+    const lists = board.data.lists;
+    lists.map((list, index) => {
+      if (list.name === card.list_name) {
+        const cardsList = list.cards.filter((c) => c.text !== card.text);
+        console.log(
+          "removing from parent--------------------------------------------------------------"
+        );
+        console.log(list);
+        console.log(card);
+        console.log(cardsList);
+        console.log(index);
+        console.log(
+          "----------------------------------------------------------------------------------"
+        );
+        updateList(cardsList, index);
+        return;
+      }
+    });
+  };
+  const updateCardBeingDragged = (card, cardHTML) => {
+    console.log("------" + card.text + " " + cardHTML);
+    if (card === null || cardHTML === null) return null;
+    setCardBeingDragged({ card: card, html: cardHTML });
+  };
+  const updateIsCardBeingDragged = (callback) => {
+    console.log("upated is card being dragged to " + callback);
+    setIsCardBeingDragged(callback);
   };
   return (
     <div className="lists-container">
-      {JSON.parse(props.currentBoard.board).lists.map((list, idx) => (
+      {props.currentBoard.data.lists.map((list, idx) => (
         <List
           key={`${list.name}-${idx}`}
           title={list.name}
@@ -40,6 +71,10 @@ export default function Lists(props) {
           listIdx={idx}
           updateList={updateList}
           updateCardBeingDragged={updateCardBeingDragged}
+          cardBeingDragged={cardBeingDragged}
+          isCardBeingDragged={isCardBeingDragged}
+          updateIsCardBeingDragged={updateIsCardBeingDragged}
+          removeCardFromListParent={removeCardFromListParent}
         />
       ))}
       <CreateNewListMenu

@@ -174,16 +174,20 @@ body {
   margin: 0;
 }
 .card-mouse-events {
-  position: fixed;
+  /* position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   cursor: auto;
-  z-index: 5;
+  z-index: 5; */
 }
-.card-container.clone {
+.card-container.clone-draggable {
   position: fixed;
+  pointer-events: none;
+}
+.card-container-placeholder {
+  background-color: var(--grey);
 }
 .List .add-card-button {
   margin: 0;
@@ -329,4 +333,16 @@ body {
 }
 .conformation-menu-no-button:hover {
   background-color: rgb(185, 28, 28);
+}
+.drag-and-drop {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: #00000013;
+}
+.list-content {
+  position: relative;
 }

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import defaultBoard from "../literals/defaultBoard";
+import serverInfo from "../literals/serverInfo";
 
 const Axios = require("axios");
 
@@ -21,12 +23,10 @@ export default function CreateNewBoard(props) {
   }, [containerRef.current]);
 
   const createNewBoard = () => {
-    const newBoard = {
-      name: inputText,
-      lists: [],
-    };
+    const newBoard = defaultBoard;
+    newBoard.name = inputText;
     const created_by = "user";
-    Axios.post("http://localhost:3001/create", {
+    Axios.post(`${serverInfo.url}/create`, {
       board: newBoard,
       created_by: created_by,
     }).then((res) => {
