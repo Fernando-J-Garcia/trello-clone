@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import Cards from "./Cards";
@@ -14,6 +15,7 @@ export default function List(props) {
   const {
     title,
     list,
+    listIdx,
     updateCardBeingDragged,
     cardBeingDragged,
     isCardBeingDragged,
@@ -22,14 +24,12 @@ export default function List(props) {
   } = props;
 
   useEffect(() => {
-    console.log(props.list);
-    console.log("=====================================================");
     if (props.list.cards !== undefined || props.list.cards !== null) {
       setCardsList(props.list.cards);
     } else {
       setCardsList([]);
     }
-  }, [props.list]);
+  }, [props.list.cards]);
 
   //When Showing card Menu...
   useEffect(() => {
@@ -54,7 +54,6 @@ export default function List(props) {
     //Hide Add Card Menu
     setShowAddCardMenu(false);
     //Add the card to card list
-    console.log(cardsList);
     const cardToBeAdded = {
       board_name: list.board_name,
       list_name: title,
@@ -76,93 +75,63 @@ export default function List(props) {
     );
   };
 
-  const CardPlaceHolder = () => {
-    const cardBeingDraggedRef = useRef(null);
-    useEffect(() => {
-      if (cardPlaceHolderRef.current === null) return;
-      if (cardBeingDragged.html === null || cardBeingDragged.html === undefined)
-        return;
-
-      if (cardBeingDragged === cardBeingDraggedRef.current) {
-        return;
-      } else {
-        cardBeingDraggedRef.current = cardBeingDragged;
-      }
-
-      const cardPlaceHolder = cardPlaceHolderRef.current;
-      const cardBeingDraggedStyle = cardBeingDragged.html;
-      console.log(
-        cardBeingDraggedStyle.width + " " + cardBeingDraggedStyle.height
-      );
-
-      cardPlaceHolder.style.width = cardBeingDraggedStyle.width;
-      cardPlaceHolder.style.height = cardBeingDraggedStyle.height;
-      cardPlaceHolder.style.padding = cardBeingDraggedStyle.padding;
-      cardPlaceHolder.style.margin = cardBeingDraggedStyle.margin;
-    }, []);
-
-    const addedCardRef = useRef(false);
-    useEffect(() => {
-      if (addedCardRef.current === true) return;
-      else {
-        addedCardRef.current = true;
-      }
-
-      if (isBeingHovered === false) return;
-      if (isCardBeingDragged === false) {
-        setIsBeingHovered(false);
-        console.log(isBeingHovered + "--------------------" + title);
-        //removeCard(cardBeingDragged.card);
-        addCard(cardBeingDragged.card);
-        removeCardFromListParent(cardBeingDragged.card);
-      }
-    }, [isCardBeingDragged]);
-    return (
-      <div className="card-container-placeholder" ref={cardPlaceHolderRef} />
-    );
-  };
-
   return (
-    <div className="list-content">
-      <div className="List">
-        <p className="list-title">{title}</p>
-        <Cards
-          cardsList={cardsList}
-          updateCardBeingDragged={updateCardBeingDragged}
-          isCardBeingDragged={isCardBeingDragged}
-          updateIsCardBeingDragged={updateIsCardBeingDragged}
-        />
-        {isBeingHovered && <CardPlaceHolder />}
-        {showAddCardMenu ? (
-          <div className="add-card-container">
-            <textarea
-              type={"text"}
-              className="add-card-input"
-              ref={cardInputRef}
-              onChange={handleAddCardInput}
-            />
-            <div className="add-card-tools">
-              <button onClick={handleAddCardButtonClick}>Add Card</button>
-              <AiOutlineClose
-                className="add-card-tools-close"
-                onClick={() => setShowAddCardMenu(false)}
-              />
-              <BsThreeDots className="add-card-tools-options" />
-            </div>
-          </div>
-        ) : (
-          <p className="add-card-button" onClick={displayAddCardMenu}>
-            + Add another card
-          </p>
-        )}
-      </div>
-      {isCardBeingDragged && (
+    <Draggable draggableId={title} index={listIdx}>
+      {(provided) => (
         <div
-          className="drag-and-drop"
-          onMouseEnter={() => setIsBeingHovered(true)}
-          onMouseLeave={() => setIsBeingHovered(false)}
-        />
+          className="list-content"
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+          {...provided.dragHandleProps}
+        >
+          <Droppable droppableId={title} type="card">
+            {(provided) => (
+              <div
+                className="list-droppable"
+                {...provided.props}
+                ref={provided.innerRef}
+              >
+                <div className="List">
+                  <p className="list-title">{title}</p>
+                  <Cards
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    cardsList={cardsList}
+                    updateCardBeingDragged={updateCardBeingDragged}
+                    isCardBeingDragged={isCardBeingDragged}
+                    updateIsCardBeingDragged={updateIsCardBeingDragged}
+                  />
+                  {provided.placeholder}
+                  {showAddCardMenu ? (
+                    <div className="add-card-container">
+                      <textarea
+                        type={"text"}
+                        className="add-card-input"
+                        ref={cardInputRef}
+                        onChange={handleAddCardInput}
+                      />
+                      <div className="add-card-tools">
+                        <button onClick={handleAddCardButtonClick}>
+                          Add Card
+                        </button>
+                        <AiOutlineClose
+                          className="add-card-tools-close"
+                          onClick={() => setShowAddCardMenu(false)}
+                        />
+                        <BsThreeDots className="add-card-tools-options" />
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="add-card-button" onClick={displayAddCardMenu}>
+                      + Add another card
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+          </Droppable>
+        </div>
       )}
-    </div>
+    </Draggable>
   );
 }

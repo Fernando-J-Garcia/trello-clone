@@ -9,6 +9,7 @@ export default function Cards(props) {
     updateCardBeingDragged,
     isCardBeingDragged,
     updateIsCardBeingDragged,
+    list_name,
   } = props;
   return (
     <div>
@@ -16,6 +17,7 @@ export default function Cards(props) {
         <Card
           key={card.text + "-" + idx}
           card={card}
+          index={idx}
           updateCardBeingDragged={updateCardBeingDragged}
           isCardBeingDragged={isCardBeingDragged}
           updateIsCardBeingDragged={updateIsCardBeingDragged}

@@ -81,6 +81,9 @@ body {
 .margin-t-b {
   margin: 0.5em 0;
 }
+.gap {
+  gap: 0.5em;
+}
 .flex.row {
   display: flex;
   flex-direction: row;
@@ -343,6 +346,7 @@ body {
   z-index: 10;
   background-color: #00000013;
 }
-.list-content {
+.list-droppable {
   position: relative;
+  /* height: 100vh; */
 }

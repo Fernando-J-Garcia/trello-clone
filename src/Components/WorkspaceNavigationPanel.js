@@ -63,7 +63,7 @@ export default function WorkspaceNavigationPanel(props) {
           className="flex row workspace-navigation-panel-board-name"
         >
           <p onClick={() => props.updateCurrentBoard(board)}>
-            {JSON.parse(board.board).name}
+            {board.data.name}
           </p>
           <BsThreeDots onClick={(event) => handleOptionsClick(event, board)} />
         </div>

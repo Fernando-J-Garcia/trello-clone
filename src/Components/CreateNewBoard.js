@@ -26,8 +26,9 @@ export default function CreateNewBoard(props) {
     const newBoard = defaultBoard;
     newBoard.name = inputText;
     const created_by = "user";
+    console.log(newBoard);
     Axios.post(`${serverInfo.url}/create`, {
-      board: newBoard,
+      data: newBoard,
       created_by: created_by,
     }).then((res) => {
       console.log(res.resultText);

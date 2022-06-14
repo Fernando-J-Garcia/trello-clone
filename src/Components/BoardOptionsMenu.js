@@ -38,7 +38,7 @@ export default function BoardOptionsMenu(props) {
     props.closeBoardOptionsUI();
   };
   const handleDelete = () => {
-    const boardData = JSON.parse(props.board.board);
+    const boardData = props.board.data;
     console.log(boardData);
     const id = props.board.id;
     const name = boardData.name;
@@ -66,9 +66,7 @@ export default function BoardOptionsMenu(props) {
     <div className="options-menu" ref={containerRef}>
       <div className="options-menu-title-container">
         {/*Board Name */}
-        <p id="options-menu-board-title">
-          {JSON.parse(props.board.board).name}
-        </p>
+        <p id="options-menu-board-title">{props.board.data.name}</p>
         <AiOutlineClose onClick={handleClose} />
       </div>
       <div className="flex row">
