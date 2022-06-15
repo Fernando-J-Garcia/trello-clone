@@ -9,6 +9,7 @@
   --list-bg: #ebebf1;
   --card-bg: #f1f4ff;
   --hover-color: rgba(0, 0, 0, 0.055);
+  --card-hover-color: rgba(0, 0, 0, 0.014);
   --font-size: 1.2em;
   --font: lato, sans-serif;
   --bold-weight: 800;
@@ -203,9 +204,25 @@ body {
   margin-bottom: 0.5em;
   border-radius: 3px;
   box-shadow: 1px 1px 3px #00000063;
+  position: relative;
 }
 .List .card-container:hover {
+  background-color: var(--card-hover-color);
+}
+.card-container-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.5em;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+}
+.card-container-icon:hover {
   background-color: var(--hover-color);
+  z-index: 40;
+}
+.card-container-icon.active {
+  opacity: 100;
 }
 .List .card-container > p {
   margin: 0;
@@ -259,6 +276,24 @@ body {
 }
 .add-card-tools-options:hover {
   background-color: var(--hover-color);
+}
+.edit-card-menu-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--card-bg);
+  border-radius: 5px;
+}
+.edit-card-menu-container input {
+  width: calc(100% - 1em);
+  height: calc(100% - 1em);
+  margin: 0;
+  padding: 0.5em;
+  outline: none;
+  border: none;
+  border-radius: 5px;
 }
 .create-new-list-button-container {
   display: flex;

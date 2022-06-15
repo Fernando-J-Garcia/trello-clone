@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import defaultBoard from "../literals/defaultBoard";
-import serverInfo from "../literals/serverInfo";
+import defaultBoard from "../../../literals/defaultBoard";
+import serverInfo from "../../../literals/serverInfo";
 
 const Axios = require("axios");
 

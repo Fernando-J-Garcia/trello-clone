@@ -68,7 +68,13 @@ export default function List(props) {
                   className="cards-dropzone"
                 >
                   <div className="cards-wrapper">
-                    <Cards cardsList={cardsList} />
+                    <Cards
+                      cardsList={cardsList}
+                      listIdx={listIdx}
+                      currentBoard={currentBoard}
+                      updateCurrentBoard={updateCurrentBoard}
+                      forceListsUpdate={forceListsUpdate}
+                    />
                     {provided.placeholder}
                     <AddCardButton
                       addCard={addCard}

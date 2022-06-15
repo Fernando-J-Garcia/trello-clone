@@ -1,12 +1,12 @@
-import "./WorkSpace.css";
-import serverInfo from "./literals/serverInfo";
+import "./Workspace.css";
+import serverInfo from "../../literals/serverInfo";
 import Navbar from "./Components/Navbar.js";
 import { useState, useEffect } from "react";
 import WorkspaceNavigationPanel from "./Components/WorkspaceNavigationPanel";
 import Lists from "./Components/Lists";
 const Axios = require("axios");
 
-function WorkSpace() {
+function Workspace() {
   const [boards, setBoards] = useState([]);
   const [currentBoard, setCurrentBoard] = useState(null);
 
@@ -90,4 +90,4 @@ function WorkSpace() {
   );
 }
 
-export default WorkSpace;
+export default Workspace;

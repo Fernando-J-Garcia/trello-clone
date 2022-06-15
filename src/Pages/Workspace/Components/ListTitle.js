@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BsEnvelope } from "react-icons/bs";
 
 export default function ListTitle({
   title,
