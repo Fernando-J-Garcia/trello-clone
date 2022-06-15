@@ -5,14 +5,10 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 export default function Lists(props) {
   const { currentBoard, updateCurrentBoard } = props;
-  const [isCardBeingDragged, setIsCardBeingDragged] = useState(false);
-  const [cardBeingDragged, setCardBeingDragged] = useState(); //should return string
-  useEffect(() => {
-    if (typeof cardBeingDragged === null || undefined) return;
-  }, [cardBeingDragged]);
 
   //Dummy value used to force an update on the component
   const [forceRerender, setForceRerender] = useState(false);
+
   if (currentBoard === null) return;
 
   const forceUpdate = () => {
@@ -39,14 +35,6 @@ export default function Lists(props) {
         return;
       }
     });
-  };
-  const updateCardBeingDragged = (card, cardHTML) => {
-    if (card === null || cardHTML === null) return null;
-    setCardBeingDragged({ card: card, html: cardHTML });
-  };
-  const updateIsCardBeingDragged = (callback) => {
-    console.log("upated is card being dragged to " + callback);
-    setIsCardBeingDragged(callback);
   };
 
   const handleDragEnd = (result) => {
@@ -129,11 +117,10 @@ export default function Lists(props) {
                 list={list}
                 listIdx={idx}
                 updateList={updateList}
-                updateCardBeingDragged={updateCardBeingDragged}
-                cardBeingDragged={cardBeingDragged}
-                isCardBeingDragged={isCardBeingDragged}
-                updateIsCardBeingDragged={updateIsCardBeingDragged}
                 removeCardFromListParent={removeCardFromListParent}
+                currentBoard={currentBoard}
+                updateCurrentBoard={updateCurrentBoard}
+                forceListsUpdate={forceUpdate}
               />
             ))}
             {provided.placeholder}

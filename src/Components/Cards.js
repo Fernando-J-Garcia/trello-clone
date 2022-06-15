@@ -4,24 +4,11 @@ import Card from "./Card";
 export default function Cards(props) {
   if (props.cardsList === null || props.cardsList === undefined) return;
   if (props.cardsList.length === 0) return;
-  const {
-    cardsList,
-    updateCardBeingDragged,
-    isCardBeingDragged,
-    updateIsCardBeingDragged,
-    list_name,
-  } = props;
+  const { cardsList, list_name } = props;
   return (
-    <div>
+    <div className="cards-content">
       {cardsList.map((card, idx) => (
-        <Card
-          key={card.text + "-" + idx}
-          card={card}
-          index={idx}
-          updateCardBeingDragged={updateCardBeingDragged}
-          isCardBeingDragged={isCardBeingDragged}
-          updateIsCardBeingDragged={updateIsCardBeingDragged}
-        />
+        <Card key={card.text + "-" + idx} card={card} index={idx} />
       ))}
     </div>
   );

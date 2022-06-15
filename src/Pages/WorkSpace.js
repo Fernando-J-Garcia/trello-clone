@@ -1,4 +1,4 @@
-import "./App.css";
+import "./WorkSpace.css";
 import serverInfo from "./literals/serverInfo";
 import Navbar from "./Components/Navbar.js";
 import { useState, useEffect } from "react";
@@ -6,7 +6,7 @@ import WorkspaceNavigationPanel from "./Components/WorkspaceNavigationPanel";
 import Lists from "./Components/Lists";
 const Axios = require("axios");
 
-function App() {
+function WorkSpace() {
   const [boards, setBoards] = useState([]);
   const [currentBoard, setCurrentBoard] = useState(null);
 
@@ -63,7 +63,7 @@ function App() {
   //board page...
   //otherwise load the previous board...
   return (
-    <div className="App">
+    <div className="Workspace">
       <div className="main-container">
         <WorkspaceNavigationPanel
           boards={boards}
@@ -90,4 +90,4 @@ function App() {
   );
 }
 
-export default App;
+export default WorkSpace;
