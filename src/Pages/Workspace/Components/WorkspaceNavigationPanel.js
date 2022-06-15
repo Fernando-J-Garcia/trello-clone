@@ -5,15 +5,20 @@ import { BsThreeDots } from "react-icons/bs";
 import BoardOptionsMenu from "./BoardOptionsMenu";
 import ConformationMenu from "./ConformationMenu";
 
+const defaultConfirmationMenuProps = {
+  isVisible: false,
+  title: "",
+  description: "",
+  callBack: () => console.log("WARNING: Calling an unassigned callback"),
+};
+
 export default function WorkspaceNavigationPanel(props) {
   const [showCreateNewBoardUI, setShowCreateBoardUI] = useState(false);
   const [showBoardOptionsUI, setShowBoardOptionsUI] = useState(false);
-  const [conformationMenuProps, setConformationMenuProps] = useState({
-    isVisible: false,
-    title: "",
-    description: "",
-    callBack: () => console.log("WARNING: Calling an unassigned callback"),
-  });
+  const [conformationMenuProps, setConformationMenuProps] = useState(
+    defaultConfirmationMenuProps
+  );
+
   //Keep track of the which element called the showBoardOptionsUI
   const [optionsMenuProps, setOptionsMenuProps] = useState({
     caller: null,
@@ -35,6 +40,7 @@ export default function WorkspaceNavigationPanel(props) {
         callBack: prev.callBack,
       };
     });
+    closeBoardOptionsUI();
   };
   const updateConfirmationMenuProps = (props) => {
     //Do stuff

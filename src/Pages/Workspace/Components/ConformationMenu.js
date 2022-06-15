@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 //title
 //description
 //end props------------
-export default function (props) {
+export default function ConformationMenu(props) {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function (props) {
   }, []);
 
   const handleClose = () => {
-    console.log("closed board options panel");
+    console.log("closed board conformation panel");
     props.closeConformationUI();
   };
   const handleSubmit = () => {

@@ -36,7 +36,7 @@ function Workspace() {
   };
 
   const updateBoards = () => {
-    console.log("boards updated ");
+    console.log("All boards updated ");
     fetchBoards();
   };
   const updateCurrentBoard = (callback) => {

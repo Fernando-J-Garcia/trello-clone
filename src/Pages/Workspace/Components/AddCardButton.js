@@ -17,14 +17,29 @@ export default function AddCardButton({ list, list_name, addCard }) {
 
   const displayAddCardMenu = () => setShowAddCardMenu(true);
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleAddCardButtonClick();
+    }
+  };
+  const HandleBlur = (event) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setShowAddCardMenu(false);
+    }
+  };
+
   const handleAddCardButtonClick = () => {
+    const card_text = textToBeAdded;
+    if (card_text[card_text.length - 1] === " ")
+      card_text = card_text.slice(0, -1);
+
     //Hide Add Card Menu
     setShowAddCardMenu(false);
     //Add the card to card list
     const cardToBeAdded = {
       board_name: list.board_name,
       list_name: list_name,
-      text: textToBeAdded,
+      text: card_text,
     };
     addCard(cardToBeAdded);
   };
@@ -34,15 +49,13 @@ export default function AddCardButton({ list, list_name, addCard }) {
 
   if (showAddCardMenu)
     return (
-      <div
-        className="add-card-container"
-        onBlur={() => setShowAddCardMenu(false)}
-      >
+      <div className="add-card-container" onBlur={HandleBlur}>
         <textarea
           type={"text"}
           className="add-card-input"
           ref={cardInputRef}
           onChange={handleAddCardInput}
+          onKeyDown={handleKeyDown}
         />
         <div className="add-card-tools">
           <button onClick={handleAddCardButtonClick}>Add Card</button>

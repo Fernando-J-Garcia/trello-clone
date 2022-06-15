@@ -21,8 +21,13 @@ export default function CreateNewListMenu(props) {
     const board = props.currentBoard;
     console.log(board);
     const boardData = board.data;
-    boardData.lists.push({ name: inputText, cards: [] });
+    boardData.lists.push({
+      board_name: boardData.name,
+      name: inputText,
+      cards: [],
+    });
     console.log(boardData);
+    board.data = boardData;
     props.updateCurrentBoard(board);
     props.forceUpdate();
     setShowCreateNewListMenu(false);

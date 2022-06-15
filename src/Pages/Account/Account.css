@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+.Login {
+  --gradient: linear-gradient(
+    90deg,
+    rgb(122, 243, 148) 0%,
+    rgb(39, 143, 212) 50%,
+    rgb(25, 227, 241) 100%
+  );
+  width: 100%;
+  height: 100vh;
+  background: var(--gradient);
+  font-family: Lato;
+}
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.login-container {
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em;
+  background-color: rgb(243, 245, 250);
+  width: 20%;
+  height: 70%;
+  border-radius: 10px;
+}
+.drop-in-animation {
+  animation: dropIn 200ms ease-in;
+}
+.spin-animation {
+  animation: spin 500ms 1;
+}
+.Login h1 {
+  margin: 0.5em 0;
+  font-weight: 900;
+  animation: dropIn 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.Login p {
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+.flex-start {
+  align-self: flex-start;
+}
+input {
+  font-family: Lato;
+  padding: 1em;
+  width: calc(100% - 2em);
+  height: 2em;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.082);
+}
+input:focus {
+  outline: solid rgba(0, 0, 0, 0.479) 1px;
+}
+button {
+  margin: 1em 0;
+  padding: 1em;
+  width: 100%;
+  background: var(--gradient);
+  border-radius: 5px;
+  font-weight: 700;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: ease-in-out 100ms;
+}
+button:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 0px 10px rgb(136, 243, 216);
+}
+
+#sign-up-link,
+#login-link {
+  align-self: center;
+  cursor: pointer;
+}
+#sign-up:hover,
+#login-link:hover {
+  border-bottom: solid black 1px;
+}
+
+@keyframes dropIn {
+  0% {
+    transform: translate(0%, 100%);
+    opacity: 0%;
+  }
+  80% {
+    transform: translate(0%, 20%);
+    opacity: 30%;
+  }
+  100% {
+    transform: translate(0%);
+    opacity: 100%;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate3d(0, 0, 0, 90deg);
+  }
+  20% {
+    transform: rotate3d(0, 1, 0, 90deg);
+  }
+
+  100% {
+    transform: rotate3d(0, 0, 0, 90deg);
+  }
+}
