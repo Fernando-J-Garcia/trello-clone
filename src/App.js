@@ -1,11 +1,10 @@
-import Account from "./Pages/Account/Account";
-import Workspace from "./Pages/Workspace/Workspace";
+import { AuthProvider } from "./contexts/AuthContext";
+import Router from "./Router";
 function App() {
   return (
-    <div className="App">
-      {/* <Workspace /> */}
-      <Account />
-    </div>
+    <AuthProvider>
+      <Router />
+    </AuthProvider>
   );
 }
 
