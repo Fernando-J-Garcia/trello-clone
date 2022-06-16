@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
 :root {
-  --default-bg-color: #d4478df3;
+  --default-gradient: linear-gradient(
+    90deg,
+    rgb(228, 245, 153) 0%,
+    rgba(74, 212, 212, 1) 50%,
+    rgb(175, 142, 212) 100%
+  );
+  --default-bg-color: #f8598e;
   --lightest-grey: rgb(240, 239, 239);
   --grey: rgb(104, 104, 104);
   --dark-grey: rgb(83, 83, 83);
@@ -19,6 +25,7 @@ body {
 }
 .Workspace {
   background-color: var(--default-bg-color);
+  background: var(--default-gradient);
   font-family: var(--font);
   max-width: 100vw;
   max-height: 100vh;
@@ -39,6 +46,9 @@ body {
   height: 100%;
   flex-direction: column;
   z-index: -1;
+  background-image: url("https://images.pexels.com/photos/889930/pexels-photo-889930.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-image: url("https://images.pexels.com/photos/957002/berchtesgaden-alpine-watzmann-berchtesgaden-national-park-957002.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-size: cover;
 }
 .work-space-panel {
   position: fixed;
@@ -48,7 +58,8 @@ body {
   flex-direction: column;
   background-color: var(--lightest-grey);
   padding: 0.5em;
-  z-index: 1;
+  z-index: 2;
+  outline: solid rgb(129, 129, 129) 1px;
 }
 .work-space-panel h4 {
   color: black;
@@ -115,18 +126,22 @@ body {
   position: relative;
   width: calc(100% - 0.5em);
   font-size: 2em;
-  background-color: rgba(0, 0, 0, 0.137);
+  background-color: rgba(243, 248, 253, 0.089);
   padding: 0.25em;
+  z-index: 1;
 }
 .navbar-item {
   margin: 0;
   padding: 0.25em 0.5em;
+  font-weight: 700;
+  color: rgba(231, 230, 230, 0.699);
 }
 .navbar > .save-button {
   background-color: var(--light-blue);
   color: white;
   padding: 0 2em;
   border: 0;
+  border-radius: 10px;
   cursor: pointer;
   margin-left: auto;
 }
@@ -148,6 +163,7 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
+  z-index: 1;
 }
 .lists-container {
   position: static;

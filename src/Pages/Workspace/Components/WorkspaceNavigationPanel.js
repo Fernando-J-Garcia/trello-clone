@@ -58,7 +58,7 @@ export default function WorkspaceNavigationPanel(props) {
   return (
     <div className="work-space-panel" id="work-space-panel">
       <div className="flex row margin-t-b">
-        <h4 className="bold black">my boards</h4>
+        <h4 className="bold black">My Boards</h4>
         <AiOutlinePlus onClick={() => setShowCreateBoardUI(true)} />
       </div>
       {/*Board Names */}

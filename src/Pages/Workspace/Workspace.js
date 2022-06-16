@@ -4,18 +4,24 @@ import Navbar from "./Components/Navbar.js";
 import { useState, useEffect } from "react";
 import WorkspaceNavigationPanel from "./Components/WorkspaceNavigationPanel";
 import Lists from "./Components/Lists";
+import { useAuth } from "../../contexts/AuthContext";
+
 const Axios = require("axios");
 
 function Workspace() {
   const [boards, setBoards] = useState([]);
   const [currentBoard, setCurrentBoard] = useState(null);
+  const { currentUser } = useAuth();
+  console.log(currentUser);
 
   useEffect(() => {
     fetchBoards();
   }, []);
 
   const fetchBoards = () => {
-    Axios.get(`${serverInfo.url}/boards`).then((res) => {
+    Axios.get(`${serverInfo.url}/boards`, {
+      params: { username: currentUser },
+    }).then((res) => {
       setBoards(res.data);
       getLastUsedBoard(res.data);
       console.log("Fetched Boards");

@@ -40,6 +40,9 @@ body {
 .spin-animation {
   animation: spin 500ms 1;
 }
+.shake-animation {
+  animation: shake 500ms 1;
+}
 .Login h1 {
   margin: 0.5em 0;
   font-weight: 900;
@@ -52,7 +55,10 @@ body {
 .flex-start {
   align-self: flex-start;
 }
-input {
+.Login form {
+  width: 100%;
+}
+.Login input {
   font-family: Lato;
   padding: 1em;
   width: calc(100% - 2em);
@@ -61,10 +67,10 @@ input {
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.082);
 }
-input:focus {
+.Login input:focus {
   outline: solid rgba(0, 0, 0, 0.479) 1px;
 }
-button {
+.Login button {
   margin: 1em 0;
   padding: 1em;
   width: 100%;
@@ -76,7 +82,7 @@ button {
   cursor: pointer;
   transition: ease-in-out 100ms;
 }
-button:hover {
+.Login button:hover {
   transform: scale(1.02);
   box-shadow: 0px 0px 10px rgb(136, 243, 216);
 }
@@ -86,9 +92,25 @@ button:hover {
   align-self: center;
   cursor: pointer;
 }
-#sign-up:hover,
+#sign-up-link:hover,
 #login-link:hover {
   border-bottom: solid black 1px;
+}
+.pos-rel {
+  position: relative;
+}
+#error-message {
+  color: red;
+  align-self: center;
+}
+.eye-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 1em;
+  cursor: pointer;
+  user-select: none;
+  color: rgb(82, 81, 81);
 }
 
 @keyframes dropIn {
@@ -115,5 +137,40 @@ button:hover {
 
   100% {
     transform: rotate3d(0, 0, 0, 90deg);
+  }
+}
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
   }
 }

@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import defaultBoard from "../../../literals/defaultBoard";
 import serverInfo from "../../../literals/serverInfo";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const Axios = require("axios");
 
 export default function CreateNewBoard(props) {
   const [inputText, setInputText] = useState("");
   const containerRef = useRef(null);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -25,7 +27,7 @@ export default function CreateNewBoard(props) {
   const createNewBoard = () => {
     const newBoard = defaultBoard;
     newBoard.name = inputText;
-    const created_by = "user";
+    const created_by = currentUser;
     console.log(newBoard);
     Axios.post(`${serverInfo.url}/create`, {
       data: newBoard,
