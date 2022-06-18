@@ -5,6 +5,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 const Axios = require("axios");
 
 export default function SignUp({ toggleLogin, setContainerStyle }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -34,11 +35,12 @@ export default function SignUp({ toggleLogin, setContainerStyle }) {
 
   const handleSignUp = (event) => {
     event.preventDefault();
-
+    setIsLoading(true);
     Axios.post(`${serverInfo.url}/register`, {
       username: username,
       password: password,
     }).then((res) => {
+      setIsLoading(false);
       if (res.data === true) {
         console.log("sign up successful");
         updateCurrentUser(username);
@@ -46,7 +48,7 @@ export default function SignUp({ toggleLogin, setContainerStyle }) {
         setErrorMessage(res.data.message);
         setContainerStyle("shake-animation");
         if (res.data.message === undefined) {
-          setErrorMessage("unkown error");
+          setErrorMessage("unknown error");
         }
       }
     });
@@ -79,7 +81,9 @@ export default function SignUp({ toggleLogin, setContainerStyle }) {
             <FaEye className="eye-icon" onClick={() => setShowPassword(true)} />
           )}
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Sign Up" : "Loading..."}
+        </button>
       </form>
       <p id="error-message">{errorMessage}</p>
       <p id="login-link" onClick={handleLoginSwitch}>

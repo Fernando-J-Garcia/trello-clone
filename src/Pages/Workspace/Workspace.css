@@ -47,7 +47,7 @@ body {
   flex-direction: column;
   z-index: -1;
   background-image: url("https://images.pexels.com/photos/889930/pexels-photo-889930.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-  background-image: url("https://images.pexels.com/photos/957002/berchtesgaden-alpine-watzmann-berchtesgaden-national-park-957002.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-image: url("https://images.pexels.com/photos/957002/berchtesgaden-alpine-watzmann-berchtesgaden-national-park-957002.jpeg");
   background-size: cover;
 }
 .work-space-panel {
@@ -234,6 +234,7 @@ body {
   padding: 0.5em;
   opacity: 0;
   transition: opacity 150ms ease-in-out;
+  cursor: pointer;
 }
 .card-container-icon:hover {
   background-color: var(--hover-color);

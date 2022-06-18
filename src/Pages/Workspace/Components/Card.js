@@ -24,7 +24,7 @@ export default function Card(props) {
   };
 
   return (
-    <Draggable draggableId={card.text} index={index}>
+    <Draggable draggableId={`${card.text}-${index}`} index={index}>
       {(provided) => (
         <div
           className="card-container"

@@ -1,3 +1,3 @@
 export default {
-  url: "http://localhost:3001",
+  url: "https://trello-clone-0.herokuapp.com",
 };

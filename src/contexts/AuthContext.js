@@ -13,10 +13,14 @@ export function AuthProvider({ children }) {
   function updateCurrentUser(user) {
     setCurrentUser(user);
   }
+  function logout() {
+    setCurrentUser("");
+  }
 
   const value = {
     currentUser,
     updateCurrentUser,
+    logout,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

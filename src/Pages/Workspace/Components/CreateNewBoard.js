@@ -38,17 +38,23 @@ export default function CreateNewBoard(props) {
     });
   };
 
+  const handleOnKeyDown = (event) => {
+    if (event.key === "Enter") {
+      createNewBoard();
+      handleClose();
+    }
+  };
+
   const handleSubmit = (event) => {
-    console.log(inputText);
     createNewBoard();
     event.preventDefault();
 
     //Close The UI
-    setInputText("");
     handleClose();
   };
   const handleClose = () => {
     console.log("closed create board panel");
+    setInputText("");
     props.closeCreateBoardUI();
   };
   const handleInputChange = (event) => {
@@ -64,7 +70,12 @@ export default function CreateNewBoard(props) {
         <p>
           Board title<span style={{ color: "red" }}>*</span>
         </p>
-        <input type={"text"} onInput={handleInputChange} value={inputText} />
+        <input
+          type={"text"}
+          onInput={handleInputChange}
+          value={inputText}
+          onKeyDown={handleOnKeyDown}
+        />
         <input type="submit" value="Submit" />
       </form>
     </div>

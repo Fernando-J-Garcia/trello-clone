@@ -17,6 +17,12 @@ export default function CreateNewListMenu(props) {
     setInputText(event.target.value);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleCreateNewList();
+    }
+  };
+
   const handleCreateNewList = () => {
     const board = props.currentBoard;
     console.log(board);
@@ -50,6 +56,7 @@ export default function CreateNewListMenu(props) {
               className="padding-b-1 margin-b-1"
               ref={inputTextRef}
               onChange={handleInputTextChange}
+              onKeyDown={handleKeyDown}
             />
             <div className="flex row">
               <button className="margin-0" onClick={handleCreateNewList}>

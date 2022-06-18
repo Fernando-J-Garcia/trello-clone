@@ -7,6 +7,12 @@ const Axios = require("axios");
 //closeBoardOptionsUI = callback function to close the board
 export default function BoardOptionsMenu(props) {
   const containerRef = useRef(null);
+  const isMouseOver = useRef(false);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleMouseDown);
+    return () => document.removeEventListener("mousedown", handleMouseDown);
+  }, []);
 
   //Calculate position of element when rendered
   useEffect(() => {
@@ -62,8 +68,18 @@ export default function BoardOptionsMenu(props) {
     };
     props.updateConfirmationMenuProps(newProps);
   };
+  const handleMouseDown = (event) => {
+    if (!containerRef.current.contains(event.target)) {
+      handleClose();
+    }
+  };
   return (
-    <div className="options-menu" ref={containerRef}>
+    <div
+      className="options-menu"
+      ref={containerRef}
+      onMouseOver={() => isMouseOver.current === true}
+      onMouseLeave={() => isMouseOver.current === false}
+    >
       <div className="options-menu-title-container">
         {/*Board Name */}
         <p id="options-menu-board-title">{props.board.data.name}</p>

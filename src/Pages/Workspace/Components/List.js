@@ -44,7 +44,7 @@ export default function List(props) {
   };
 
   return (
-    <Draggable draggableId={title} index={listIdx}>
+    <Draggable draggableId={`${title}-${listIdx}`} index={listIdx}>
       {(provided) => (
         <div
           className="list-content"

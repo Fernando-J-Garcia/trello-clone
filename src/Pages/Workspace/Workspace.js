@@ -1,7 +1,7 @@
 import "./Workspace.css";
 import serverInfo from "../../literals/serverInfo";
 import Navbar from "./Components/Navbar.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import WorkspaceNavigationPanel from "./Components/WorkspaceNavigationPanel";
 import Lists from "./Components/Lists";
 import { useAuth } from "../../contexts/AuthContext";
@@ -13,6 +13,7 @@ function Workspace() {
   const [currentBoard, setCurrentBoard] = useState(null);
   const { currentUser } = useAuth();
   console.log(currentUser);
+  const currentBoardRef = useRef(null);
 
   useEffect(() => {
     fetchBoards();
@@ -22,10 +23,17 @@ function Workspace() {
     Axios.get(`${serverInfo.url}/boards`, {
       params: { username: currentUser },
     }).then((res) => {
+      parseBoardDataToJSON(res.data);
       setBoards(res.data);
       getLastUsedBoard(res.data);
       console.log("Fetched Boards");
       console.log(res.data);
+    });
+  };
+  const parseBoardDataToJSON = (boards) => {
+    boards.map((board) => {
+      console.log(board.data);
+      board.data = JSON.parse(board.data);
     });
   };
 
@@ -36,8 +44,8 @@ function Workspace() {
       setCurrentBoard(null);
     } else {
       const board = boards[0];
-      board.data = JSON.parse(board.data);
       setCurrentBoard(board);
+      currentBoardRef.current = board;
     }
   };
 
@@ -45,10 +53,18 @@ function Workspace() {
     console.log("All boards updated ");
     fetchBoards();
   };
-  const updateCurrentBoard = (callback) => {
+  const updateCurrentBoard = (board) => {
+    //Stops board from being updated more then once per second
+    const oldDate = new Date(currentBoardRef.current.updated_at);
+    const newDate = new Date();
+    if (oldDate.getSeconds() === newDate.getSeconds()) return;
+
     console.log("board updated");
-    console.log(callback);
-    setCurrentBoard(callback);
+    console.log(board);
+    setCurrentBoard(board);
+    saveBoard();
+    currentBoardRef.current = board;
+    currentBoardRef.current.updated_at = new Date(newDate).toISOString();
   };
   const saveBoard = () => {
     const id = currentBoard.id;
