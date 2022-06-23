@@ -82,7 +82,7 @@ export default function SignUp({ toggleLogin, setContainerStyle }) {
           )}
         </div>
         <button type="submit" disabled={isLoading}>
-          {isLoading ? "Sign Up" : "Loading..."}
+          {!isLoading ? "Sign Up" : "Loading..."}
         </button>
       </form>
       <p id="error-message">{errorMessage}</p>

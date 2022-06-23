@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import serverInfo from "../../literals/serverInfo";
 const Axios = require("axios");
 
 //expected Props
@@ -49,7 +50,7 @@ export default function BoardOptionsMenu(props) {
     const id = props.board.id;
     const name = boardData.name;
 
-    Axios.post("http://localhost:3001/delete", {
+    Axios.post(`${serverInfo.url}/delete`, {
       id: id,
     }).then((res) => {
       console.log(res.resultText);
