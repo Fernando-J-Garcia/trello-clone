@@ -39,19 +39,24 @@ export default function SignUp({ toggleLogin, setContainerStyle }) {
     Axios.post(`${serverInfo.url}/register`, {
       username: username,
       password: password,
-    }).then((res) => {
-      setIsLoading(false);
-      if (res.data === true) {
-        console.log("sign up successful");
-        updateCurrentUser(username);
-      } else {
-        setErrorMessage(res.data.message);
-        setContainerStyle("shake-animation");
-        if (res.data.message === undefined) {
-          setErrorMessage("unknown error");
+    })
+      .then((res) => {
+        setIsLoading(false);
+        if (res.data === true) {
+          console.log("sign up successful");
+          updateCurrentUser(username);
+        } else {
+          setErrorMessage(res.data.message);
+          setContainerStyle("shake-animation");
+          if (res.data.message === undefined) {
+            setErrorMessage("unknown error");
+          }
         }
-      }
-    });
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setErrorMessage("Failed to reach server");
+      });
   };
   return (
     <>

@@ -67,6 +67,7 @@ function Workspace() {
     currentBoardRef.current.updated_at = new Date(newDate).toISOString();
   };
   const saveBoard = () => {
+    console.log("save board being called");
     const id = currentBoard.id;
     const boardData = JSON.stringify(currentBoard.data);
     Axios.post(`${serverInfo.url}/save`, {

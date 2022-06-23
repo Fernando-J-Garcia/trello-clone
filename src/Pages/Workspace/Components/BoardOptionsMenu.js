@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import serverInfo from "../../literals/serverInfo";
+import serverInfo from "../../../literals/serverInfo";
 const Axios = require("axios");
 
 //expected Props
