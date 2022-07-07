@@ -5,4 +5,4 @@ Features\
 -Login/register\
 -Create and delete boards, lists and cards\
 -Automatic saving\
--Drag and drop system using react-beautiful-dnd\
+-Drag and drop system using react-beautiful-dnd
